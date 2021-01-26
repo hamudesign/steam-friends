@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "title": "Steam Friends"
   },
-  "host": "default.aws-proxy.mercury.bamtech.dev.us-east-1.bamgrid.net",
+  "host": "tbd.hamu.design",
   "schemes": [
     "http"
   ],
