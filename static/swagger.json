@@ -1,0 +1,120 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Steam friends service",
+    "version": "1.0.0",
+    "title": "Steam Friends"
+  },
+  "host": "default.aws-proxy.mercury.bamtech.dev.us-east-1.bamgrid.net",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Simple health check",
+        "responses": {
+          "200": {
+            "description": "Healthy response"
+          }
+        }
+      }
+    },
+    "/steamfriends/games/common": {
+      "get": {
+        "summary": "Find common friends",
+        "operationId": "putRecord",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "steamids",
+            "required": true,
+            "type": "string",
+            "description": "comma delimited of steamids"
+          },
+          {
+            "in": "query",
+            "name": "include_played_free_games",
+            "required": true,
+            "type": "boolean",
+            "description": "flag to include played free games (defaults to false)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data about common games",
+            "schema": {
+              "$ref": "#/definitions/GetCommonGamesResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Game": {
+      "type": "object",
+      "required": [
+        "appid",
+        "name",
+        "playtime_forever",
+        "img_icon_url",
+        "img_logo_url"
+      ],
+      "properties": {
+        "appid": {
+          "type": "integer",
+          "example": 10,
+          "description": "Unique app identifier"
+        },
+        "name": {
+          "type": "string",
+          "example": "Counter-Strike",
+          "description": "Game name"
+        },
+        "playtime_forever": {
+          "type": "integer",
+          "example": 32,
+          "description": "Total play time"
+        },
+        "img_icon_url": {
+          "type": "string",
+          "example": "6b0312cda02f5f777efa2f3318c307ff9acafbb5",
+          "description": "Game image icon url"
+        },
+        "img_logo_url": {
+          "type": "string",
+          "example": "af890f848dd606ac2fd4415de3c3f5e7a66fcb9f",
+          "description": "Game image logo url"
+        }
+      }
+    },
+    "GetCommonGamesResponse": {
+      "type": "object",
+      "required": [
+        "game_count",
+        "games"
+      ],
+      "properties": {
+        "game_count": {
+          "type": "integer",
+          "example": 1,
+          "description": "Number of common games"
+        },
+        "games": {
+          "type": "array",
+          "description": "Sequence number",
+          "items": {
+            "$ref": "#/definitions/Game"
+          }
+        }
+      }
+    }
+  }
+}
